@@ -1,0 +1,12 @@
+Nombre:juan
+Cedula:122312312
+Direccion:acrera 83
+Telefono:3123124
+Contraseña:juan
+
+Nombre:jujj
+Cedula:7565765
+Direccion:carrear
+Telefono:08909889
+Contraseña:tdyghf
+

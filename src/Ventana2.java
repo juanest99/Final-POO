@@ -10,7 +10,7 @@ public class Ventana2 extends JFrame {
     Color margen = new Color(106,97,148);
     Color boton = new Color(30,27,41);
     public Ventana2() {
-        setTitle("Guarderia de masacotas");
+        setTitle("Registro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800,600);
         setLocationRelativeTo(null);
