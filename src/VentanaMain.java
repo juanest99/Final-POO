@@ -1,12 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VentanaMain extends JFrame {
     Color fondo = new Color(38, 35, 53);
-    Color text = new Color(194,190,212);
-    Color mini = new Color(46,43,65);
-    Color margen = new Color(106,97,148);
-    Color boton = new Color(30,27,41);
+    Color text = new Color(194, 190, 212);
+    Color mini = new Color(46, 43, 65);
+    Color margen = new Color(106, 97, 148);
+    Color boton = new Color(30, 27, 41);
+    List<Mascota> mascotas;
+    List<JLabel> imageLabels;
+    List<Boolean> ocupado;
 
     JLabel nombreLabel;
     JLabel cedulaLabel;
@@ -16,9 +23,12 @@ public class VentanaMain extends JFrame {
     public VentanaMain() {
         setTitle("Guardería de mascotas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800,600);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         getContentPane().setBackground(fondo);
+        mascotas = new ArrayList<>();
+        imageLabels = new ArrayList<>();
+        ocupado = new ArrayList<>();
 
         // Crear un panel principal con BorderLayout
         JPanel panelPrincipal = new JPanel(new BorderLayout());
@@ -32,23 +42,23 @@ public class VentanaMain extends JFrame {
         panelDatos.setLayout(new BoxLayout(panelDatos, BoxLayout.Y_AXIS));
 
         // Agregar los datos al panel
-        JLabel labelDatos = new JLabel("Datos del dueño:");
+        JLabel labelDatos = new JLabel(" Datos del dueño:");
         labelDatos.setForeground(text);
         panelDatos.add(labelDatos);
 
-        nombreLabel = new JLabel("Nombre: ");
+        nombreLabel = new JLabel("\nNombre: ");
         nombreLabel.setForeground(text);
         panelDatos.add(nombreLabel);
 
-        cedulaLabel = new JLabel("Cedula: ");
+        cedulaLabel = new JLabel("\nCedula: ");
         cedulaLabel.setForeground(text);
         panelDatos.add(cedulaLabel);
 
-        numeroLabel = new JLabel("Numero: ");
+        numeroLabel = new JLabel("\nNumero: ");
         numeroLabel.setForeground(text);
         panelDatos.add(numeroLabel);
 
-        direccionLabel = new JLabel("Direccion: ");
+        direccionLabel = new JLabel("\nDireccion: ");
         direccionLabel.setForeground(text);
         panelDatos.add(direccionLabel);
 
@@ -59,13 +69,29 @@ public class VentanaMain extends JFrame {
         JPanel panelIngreso = new JPanel(new GridLayout(2, 4, 10, 10));
         panelIngreso.setBackground(fondo);
 
-        // Ejemplo de cajas de texto para ingresar datos de mascotas
+        // Ejemplo de etiquetas para mostrar imágenes de mascotas
         for (int i = 1; i <= 8; i++) {
-            JTextField textField = new JTextField();
-            textField.setBackground(mini);
-            textField.setForeground(text);
-            textField.setBorder(BorderFactory.createLineBorder(margen));
-            panelIngreso.add(textField);
+            JLabel imageLabel = new JLabel();
+            imageLabel.setOpaque(true);
+            imageLabel.setBackground(mini);
+            imageLabel.setBorder(BorderFactory.createLineBorder(margen));
+            imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+            final int index = i - 1;
+            imageLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (!ocupado.get(index)) {
+                        nuevo();
+                    }else{
+                            Actividades actividades = new Actividades();
+                    }
+                }
+            });
+            imageLabels.add(imageLabel);
+            ocupado.add(false); // Inicialmente todos los espacios están libres
+            panelIngreso.add(imageLabel);
         }
 
         // Agregar los paneles al panel principal
@@ -75,9 +101,30 @@ public class VentanaMain extends JFrame {
     }
 
     public void mostrarDatos(String nombre, String cedula, String direccion, String telefono) {
-        nombreLabel.setText("Nombre: " + nombre);
-        cedulaLabel.setText("Cedula: " + cedula);
-        direccionLabel.setText("Direccion: " + direccion);
-        numeroLabel.setText("Numero: " + telefono);
+        nombreLabel.setText("\nNombre: " + nombre);
+        cedulaLabel.setText("\nCedula: " + cedula);
+        direccionLabel.setText("\nDireccion: " + direccion);
+        numeroLabel.setText(" \nNumero: " + telefono);
     }
+
+    public void actualizarListaMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
+        for (int i = 0; i < imageLabels.size(); i++) {
+            if (i < mascotas.size()) {
+                ImageIcon imageIcon = new ImageIcon(mascotas.get(i).getImagen());
+                // Escalar la imagen para ajustarla al tamaño del JLabel
+                Image scaledImage = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                imageLabels.get(i).setIcon(new ImageIcon(scaledImage));
+                ocupado.set(i, true);// Marcar el espacio como ocupado
+            } else {
+                imageLabels.get(i).setIcon(null);
+                ocupado.set(i, false); // Marcar el espacio como libre
+            }
+        }
+    }
+
+    public void nuevo() {
+        new Ventana3(this, mascotas);
+    }
+
 }

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class Registro implements ActionListener {
     private JTextField nombre;
     private JTextField cedula;
@@ -16,6 +17,7 @@ public class Registro implements ActionListener {
         this.direccion = direccion;
         this.telefono = telefono;
         this.contraseña= contraseña;
+
     }
     public void limpiarCampos() {
         nombre.setText("");
@@ -23,7 +25,6 @@ public class Registro implements ActionListener {
         direccion.setText("");
         telefono.setText("");
         contraseña.setText("");
-
         nombre.getParent().revalidate();
         nombre.getParent().repaint();
     }
