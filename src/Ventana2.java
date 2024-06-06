@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.security.Guard;
 
 public class Ventana2 extends JFrame {
     Color fondo = new Color(38, 35, 53);
@@ -88,6 +90,22 @@ public class Ventana2 extends JFrame {
         registrar.setMaximumSize(buttonSize);
         registrar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        registrar.addActionListener(e -> {
+            try {
+                Registro registro = new Registro(nombre, documentos, lugar, celular, contraseña);
+                if(registro.getDatos().equals("Fail")){
+                    JOptionPane.showMessageDialog(null,"Llena todos los campos");
+                } else if (registro.getDatos().equals("Rep")) {
+                    JOptionPane.showMessageDialog(null, "Este usuario ya se encuentra registrado");
+                } else {
+                    GuardU.guardarDatos(registro.getDatos());
+                    registro.limpiarCampos();
+                    dispose();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         panel.add(Box.createVerticalGlue());
         panel.add(name);

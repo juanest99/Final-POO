@@ -17,6 +17,7 @@ public class Ventana extends JFrame {
         setVisible(true);
     }
     private void iniciar() {
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Usar BoxLayout en eje Y
         panel.setBackground(fondo);
