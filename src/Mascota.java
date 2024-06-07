@@ -1,12 +1,12 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.Serializable;
-import java.util.jar.JarOutputStream;
 
-public class Mascota implements Serializable {
-    private String nombre;
-    private String edad;
-    private String sexo;
-    private File imagen;
+public abstract class Mascota implements Serializable {
+    protected String nombre;
+    protected String edad;
+    protected String sexo;
+    protected File imagen;
 
     public Mascota(String nombre,String edad, String sexo,File imagen) {
         this.nombre = nombre;
@@ -14,20 +14,19 @@ public class Mascota implements Serializable {
         this.sexo = sexo;
         this.imagen = imagen;
     }
+
+    public void mostrarDatos() {
+        String mensaje = "Nombre: " + nombre + "\n" +
+                "Edad: " + edad + "\n" +
+                "Sexo: " + sexo + "\n";
+        JOptionPane.showMessageDialog(null, mensaje, "Datos de la mascota", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public abstract void setData();
+
     // Getters
     public String getNombre() { return nombre; }
     public String getEdad() { return edad; }
     public String getSexo() { return sexo; }
-
-    public String getImagen() {
-        return imagen.getAbsolutePath();
-    }
-
-    public String getInfo() {
-        // Devuelve la información de la mascota como una cadena.
-        // Modifica esto para que se ajuste a tus necesidades.
-        return "Nombre: " + nombre;
-    }
-
-
+    public String getImagen() { return imagen.getAbsolutePath(); }
 }

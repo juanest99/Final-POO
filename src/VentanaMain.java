@@ -14,6 +14,7 @@ public class VentanaMain extends JFrame {
     List<Mascota> mascotas;
     List<JLabel> imageLabels;
     List<Boolean> ocupado;
+    String nombre;
 
     JLabel nombreLabel;
     JLabel cedulaLabel;
@@ -85,7 +86,7 @@ public class VentanaMain extends JFrame {
                     if (!ocupado.get(index)) {
                         nuevo();
                     }else{
-                            Actividades actividades = new Actividades();
+                        Actividades actividades = new Actividades(mascotas,index);
                     }
                 }
             });
@@ -105,6 +106,7 @@ public class VentanaMain extends JFrame {
         cedulaLabel.setText("\nCedula: " + cedula);
         direccionLabel.setText("\nDireccion: " + direccion);
         numeroLabel.setText(" \nNumero: " + telefono);
+        this.nombre = nombre;
     }
 
     public void actualizarListaMascotas(List<Mascota> mascotas) {
@@ -122,6 +124,7 @@ public class VentanaMain extends JFrame {
             }
         }
     }
+
 
     public void nuevo() {
         new Ventana3(this, mascotas);
