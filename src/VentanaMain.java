@@ -86,7 +86,7 @@ public class VentanaMain extends JFrame {
                     if (!ocupado.get(index)) {
                         nuevo();
                     }else{
-                        Actividades actividades = new Actividades(mascotas,index);
+                        new Actividades(VentanaMain.this, mascotas, index);
                     }
                 }
             });
@@ -114,17 +114,15 @@ public class VentanaMain extends JFrame {
         for (int i = 0; i < imageLabels.size(); i++) {
             if (i < mascotas.size()) {
                 ImageIcon imageIcon = new ImageIcon(mascotas.get(i).getImagen());
-                // Escalar la imagen para ajustarla al tamaño del JLabel
                 Image scaledImage = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 imageLabels.get(i).setIcon(new ImageIcon(scaledImage));
-                ocupado.set(i, true);// Marcar el espacio como ocupado
+                ocupado.set(i, true); // Marcar el espacio como ocupado
             } else {
                 imageLabels.get(i).setIcon(null);
                 ocupado.set(i, false); // Marcar el espacio como libre
             }
         }
     }
-
 
     public void nuevo() {
         new Ventana3(this, mascotas);

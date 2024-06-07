@@ -1,10 +1,10 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.List;
 import java.util.Random;
+import javax.swing.*;
 
 public class Actividades extends JFrame {
     Color fondo = new Color(38, 35, 53);
@@ -12,8 +12,8 @@ public class Actividades extends JFrame {
     Color mini = new Color(46, 43, 65);
     Color margen = new Color(106, 97, 148);
     Color boton = new Color(30, 27, 41);
-    int baño =0;
-    int entrenar=0;
+    int baño = 0;
+    int entrenar = 0;
     String[] mensajesConsulta = {
             "Tu mascota necesita una revisión completa para asegurarse de su buena salud.",
             "Recuerda vacunar a tu mascota según el calendario de vacunación.",
@@ -25,7 +25,10 @@ public class Actividades extends JFrame {
     private List<Mascota> mascotas;
     private int index;
     private File archivoDatos;
-    public Actividades(List<Mascota> mascotas, int index) {
+    private VentanaMain ventanaMain; // Añadir referencia a VentanaMain
+
+    public Actividades(VentanaMain ventanaMain, List<Mascota> mascotas, int index) { // Modificar el constructor
+        this.ventanaMain = ventanaMain; // Inicializar la referencia
         this.mascotas = mascotas;
         this.index = index;
         this.archivoDatos = archivoDatos;
@@ -35,18 +38,14 @@ public class Actividades extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(fondo);
 
-        // Verificar si la lista de mascotas no está vacía
         if (!mascotas.isEmpty()) {
-            // Crear etiquetas para mostrar la información de la primera mascota
             Mascota primeraMascota = mascotas.get(index);
 
             JLabel nombreLabel = new JLabel("Nombre: " + primeraMascota.getNombre());
             nombreLabel.setForeground(text);
             getContentPane().add(nombreLabel, BorderLayout.NORTH);
 
-            // Añadir más etiquetas según sea necesario para mostrar toda la información de la mascota
-
-            iniciar(mascotas,index); // Iniciar la creación de los botones
+            iniciar(mascotas, index);
         }
 
         setVisible(true);
@@ -64,8 +63,8 @@ public class Actividades extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 baño++;
-                JOptionPane.showMessageDialog(null, mascotas.get(index).getNombre()+ "tomo "+
-                        baño + " Un baño");
+                JOptionPane.showMessageDialog(null, mascotas.get(index).getNombre() + " tomó " +
+                        baño + " un baño");
             }
         });
         panelBotones.add(botonBañar);
@@ -77,7 +76,7 @@ public class Actividades extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 entrenar++;
-                JOptionPane.showMessageDialog(null, mascotas.get(index).getNombre()+ " ha entrenado "+
+                JOptionPane.showMessageDialog(null, mascotas.get(index).getNombre() + " ha entrenado " +
                         entrenar + " vez");
             }
         });
@@ -104,9 +103,11 @@ public class Actividades extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 mascotas.remove(index);
                 JOptionPane.showMessageDialog(null, "La mascota ha sido eliminada.");
-                dispose(); // Cierra la ventana actual
+                ventanaMain.actualizarListaMascotas(mascotas); // Actualiza la lista completa
+                dispose();
             }
         });
+
         panelBotones.add(botonEliminar);
 
         JButton botonModificar = new JButton("Modificar");
@@ -119,16 +120,18 @@ public class Actividades extends JFrame {
             }
         });
         panelBotones.add(botonModificar);
-        JButton MostrarDatos = new JButton("Mostrar Datos");
-        MostrarDatos.setBackground(boton);
-        MostrarDatos.setForeground(text);
-        MostrarDatos.addActionListener(new ActionListener() {
+
+        JButton mostrarDatos = new JButton("Mostrar Datos");
+        mostrarDatos.setBackground(boton);
+        mostrarDatos.setForeground(text);
+        mostrarDatos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mascotas.get(index).mostrarDatos();
             }
         });
-        panelBotones.add(MostrarDatos);
+        panelBotones.add(mostrarDatos);
+
         getContentPane().add(panelBotones, BorderLayout.CENTER);
     }
 }

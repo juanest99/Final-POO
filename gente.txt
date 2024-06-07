@@ -28,3 +28,9 @@ Direccion:carera 83 #69a-82
 Telefono:3184162087
 Contraseña:clemencia
 
+Nombre:lucas
+Cedula:1016947756
+Direccion:caera 83 #69a-82
+Telefono:3184162087
+Contraseña:lucas
+
