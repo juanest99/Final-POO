@@ -2,10 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VentanaMain extends JFrame {
+public class VentanaMain extends JFrame implements Serializable {
+    private static final long serialVersionUID = 1L; // Para serialización
+
     Color fondo = new Color(38, 35, 53);
     Color text = new Color(194, 190, 212);
     Color mini = new Color(46, 43, 65);
@@ -14,7 +19,6 @@ public class VentanaMain extends JFrame {
     List<Mascota> mascotas;
     List<JLabel> imageLabels;
     List<Boolean> ocupado;
-    String nombre;
 
     JLabel nombreLabel;
     JLabel cedulaLabel;
@@ -27,6 +31,16 @@ public class VentanaMain extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         getContentPane().setBackground(fondo);
+
+        // Agregar listener para guardar los datos al cerrar la ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                guardarDatos();
+            }
+        });
+
+        // Inicialización de listas y componentes
         mascotas = new ArrayList<>();
         imageLabels = new ArrayList<>();
         ocupado = new ArrayList<>();
@@ -85,8 +99,8 @@ public class VentanaMain extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     if (!ocupado.get(index)) {
                         nuevo();
-                    }else{
-                        new Actividades(VentanaMain.this, mascotas, index);
+                    } else {
+                        Actividades actividades = new Actividades(VentanaMain.this, mascotas, index);
                     }
                 }
             });
@@ -98,6 +112,12 @@ public class VentanaMain extends JFrame {
         // Agregar los paneles al panel principal
         panelPrincipal.add(panelIngreso, BorderLayout.CENTER);
 
+        // Cargar datos al inicio
+        cargarDatos();
+
+        // Mostrar los datos cargados en la interfaz gráfica
+        actualizarListaMascotas(mascotas);
+
         setVisible(true);
     }
 
@@ -106,7 +126,6 @@ public class VentanaMain extends JFrame {
         cedulaLabel.setText("\nCedula: " + cedula);
         direccionLabel.setText("\nDireccion: " + direccion);
         numeroLabel.setText(" \nNumero: " + telefono);
-        this.nombre = nombre;
     }
 
     public void actualizarListaMascotas(List<Mascota> mascotas) {
@@ -114,9 +133,10 @@ public class VentanaMain extends JFrame {
         for (int i = 0; i < imageLabels.size(); i++) {
             if (i < mascotas.size()) {
                 ImageIcon imageIcon = new ImageIcon(mascotas.get(i).getImagen());
+                // Escalar la imagen para ajustarla al tamaño del JLabel
                 Image scaledImage = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 imageLabels.get(i).setIcon(new ImageIcon(scaledImage));
-                ocupado.set(i, true); // Marcar el espacio como ocupado
+                ocupado.set(i, true);// Marcar el espacio como ocupado
             } else {
                 imageLabels.get(i).setIcon(null);
                 ocupado.set(i, false); // Marcar el espacio como libre
@@ -126,6 +146,25 @@ public class VentanaMain extends JFrame {
 
     public void nuevo() {
         new Ventana3(this, mascotas);
+    }
+
+    private void guardarDatos() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("datos.data"))) {
+            oos.writeObject(mascotas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarDatos() {
+        File file = new File("datos.data");
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                mascotas = (List<Mascota>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

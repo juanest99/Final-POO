@@ -34,3 +34,9 @@ Direccion:caera 83 #69a-82
 Telefono:3184162087
 Contraseña:lucas
 
+Nombre:kevin
+Cedula:31231
+Direccion:soacha
+Telefono:31231312
+Contraseña:kevin
+
