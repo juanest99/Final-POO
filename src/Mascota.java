@@ -7,7 +7,8 @@ public abstract class Mascota implements Serializable {
     protected String edad;
     protected String sexo;
     protected File imagen;
-
+    protected String diaBaño;
+    protected String diaEntrenar;
     public Mascota(String nombre,String edad, String sexo,File imagen) {
         this.nombre = nombre;
         this.edad = edad;
@@ -23,7 +24,21 @@ public abstract class Mascota implements Serializable {
     }
 
     public abstract void setData();
+    public String getDiaBaño() {
+        return diaBaño;
+    }
 
+    public void setDiaBaño(String diaBaño) {
+        this.diaBaño = diaBaño;
+    }
+
+    public String getDiaEntrenar() {
+        return diaEntrenar;
+    }
+
+    public void setDiaEntrenar(String diaEntrenar) {
+        this.diaEntrenar = diaEntrenar;
+    }
     // Getters
     public String getNombre() { return nombre; }
     public String getEdad() { return edad; }

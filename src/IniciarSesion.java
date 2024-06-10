@@ -21,7 +21,7 @@ public class IniciarSesion implements ActionListener {
         String[] datosUsuario = LectorUsuarios.obtenerDatosUsuario(nombreTexto, contraseñaTexto);
         if (datosUsuario != null) {
             JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-            VentanaMain ventana = new VentanaMain();
+            VentanaMain ventana = new VentanaMain(nombreTexto);
             ventana.mostrarDatos(datosUsuario[0], datosUsuario[1], datosUsuario[2], datosUsuario[3]);
         } else {
             JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos");

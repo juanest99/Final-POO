@@ -101,6 +101,7 @@ public class Ventana2 extends JFrame {
                     GuardU.guardarDatos(registro.getDatos());
                     registro.limpiarCampos();
                     dispose();
+
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();

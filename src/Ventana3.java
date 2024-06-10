@@ -94,6 +94,7 @@ public class Ventana3 extends JFrame {
         guardarButton.setMaximumSize(buttonSize);
         guardarButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+
         guardarButton.addActionListener(e -> {
             String nombre = nombreField.getText();
             String edad = edadField.getText();
@@ -104,26 +105,28 @@ public class Ventana3 extends JFrame {
             if (tipo.equals("Perro") || tipo.equals("Gato")) {
                 String raza = razaField.getText();
                 if (tipo.equals("Perro")) {
-                    mascota = new Perro(nombre, edad, sexo, new File(imagen.getAbsolutePath()), raza);
+                    mascota = new Perro(nombre, edad, sexo, imagen, raza);
                 } else {
-                    mascota = new Gato(nombre, edad, sexo, new File(imagen.getAbsolutePath()), raza);
+                    mascota = new Gato(nombre, edad, sexo, imagen, raza);
                 }
             } else if (tipo.equals("Hamster")) {
                 String color = colorField.getText();
-                mascota = new Hamster(nombre, edad, sexo, new File(imagen.getAbsolutePath()), color);
+                mascota = new Hamster(nombre, edad, sexo, imagen, color);
             } else if (tipo.equals("Pajaro")) {
                 String especie = especieField.getText();
-                mascota = new Pajaro(nombre, edad, sexo, new File(imagen.getAbsolutePath()), especie);
+                mascota = new Pajaro(nombre, edad, sexo, imagen, especie);
             } else {
                 String veneno = venenoField.getText();
-                mascota = new Iguana(nombre, edad, sexo, new File(imagen.getAbsolutePath()), veneno);
+                mascota = new Iguana(nombre, edad, sexo, imagen, veneno);
             }
 
             mascotas.add(mascota);
-            GestorSerializacion.guardarMascota(mascota, "mascota.data");
             ventanaMain.actualizarListaMascotas(mascotas);
+            GestorSerializacion.guardarMascota(mascota, ventanaMain.getNombreUsuario() + ".data");
             dispose();
         });
+
+
 
         panel.add(Box.createVerticalGlue());
         panel.add(nombreLabel);

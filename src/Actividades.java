@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Random;
 import javax.swing.*;
@@ -12,8 +15,8 @@ public class Actividades extends JFrame {
     Color mini = new Color(46, 43, 65);
     Color margen = new Color(106, 97, 148);
     Color boton = new Color(30, 27, 41);
-    int baño = 0;
-    int entrenar = 0;
+    String baño;
+    String entrenar;
     String[] mensajesConsulta = {
             "Tu mascota necesita una revisión completa para asegurarse de su buena salud.",
             "Recuerda vacunar a tu mascota según el calendario de vacunación.",
@@ -24,20 +27,16 @@ public class Actividades extends JFrame {
 
     private List<Mascota> mascotas;
     private int index;
-    private File archivoDatos;
     private VentanaMain ventanaMain; // Añadir referencia a VentanaMain
-
     public Actividades(VentanaMain ventanaMain, List<Mascota> mascotas, int index) { // Modificar el constructor
         this.ventanaMain = ventanaMain; // Inicializar la referencia
         this.mascotas = mascotas;
         this.index = index;
-        this.archivoDatos = archivoDatos;
         setTitle("Actividades");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 600);
         setLocationRelativeTo(null);
         getContentPane().setBackground(fondo);
-
         if (!mascotas.isEmpty()) {
             Mascota primeraMascota = mascotas.get(index);
 
@@ -62,9 +61,12 @@ public class Actividades extends JFrame {
         botonBañar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                baño++;
-                JOptionPane.showMessageDialog(null, mascotas.get(index).getNombre() + " tomó " +
-                        baño + " un baño");
+                String baño = JOptionPane.showInputDialog(null, "Menciona el día del baño");
+                if (baño != null && !baño.trim().isEmpty()) {
+                    mascotas.get(index).setDiaBaño(baño);
+                    JOptionPane.showMessageDialog(null, "El baño ha sido programado para el " + baño + ".");
+                    guardarDatos();
+                }
             }
         });
         panelBotones.add(botonBañar);
@@ -75,9 +77,12 @@ public class Actividades extends JFrame {
         botonEntrenar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                entrenar++;
-                JOptionPane.showMessageDialog(null, mascotas.get(index).getNombre() + " ha entrenado " +
-                        entrenar + " vez");
+                String entrenar = JOptionPane.showInputDialog(null, "Menciona el día del entrenamiento");
+                if (entrenar != null && !entrenar.trim().isEmpty()) {
+                    mascotas.get(index).setDiaEntrenar(entrenar);
+                    JOptionPane.showMessageDialog(null, "El entrenamiento ha sido programado para el " + entrenar + ".");
+                    guardarDatos();
+                }
             }
         });
         panelBotones.add(botonEntrenar);
@@ -104,6 +109,7 @@ public class Actividades extends JFrame {
                 mascotas.remove(index);
                 JOptionPane.showMessageDialog(null, "La mascota ha sido eliminada.");
                 ventanaMain.actualizarListaMascotas(mascotas); // Actualiza la lista completa
+                guardarDatos();
                 dispose();
             }
         });
@@ -117,6 +123,7 @@ public class Actividades extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mascotas.get(index).setData();
+                guardarDatos();
             }
         });
         panelBotones.add(botonModificar);
@@ -127,11 +134,19 @@ public class Actividades extends JFrame {
         mostrarDatos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String diaBaño = mascotas.get(index).getDiaBaño();
+                String diaEntrenar = mascotas.get(index).getDiaEntrenar();
                 mascotas.get(index).mostrarDatos();
+                JOptionPane.showMessageDialog(null, "Día de baño: " + (diaBaño != null ? diaBaño : "No programado"));
+                JOptionPane.showMessageDialog(null, "Día de entreno: " + (diaEntrenar != null ? diaEntrenar : "No programado"));
             }
         });
         panelBotones.add(mostrarDatos);
 
         getContentPane().add(panelBotones, BorderLayout.CENTER);
+    }
+
+    private void guardarDatos() {
+        ventanaMain.guardarDatos(); // Llamar a la función de guardar datos en VentanaMain
     }
 }

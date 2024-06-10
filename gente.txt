@@ -1,42 +1,12 @@
 Nombre:juan
-Cedula:122312312
-Direccion:acrera 83
-Telefono:3123124
+Cedula:1016947756
+Direccion:engativa
+Telefono:3184162087
 Contraseña:juan
 
-Nombre:jujj
-Cedula:7565765
-Direccion:carrear
-Telefono:08909889
-Contraseña:tdyghf
-
-Nombre:nose
-Cedula:10169477456
-Direccion:carera82313
-Telefono:318293092
-Contraseña:juan24
-
-Nombre:hola
-Cedula:11231321
-Direccion:daad
-Telefono:3213131
-Contraseña:hola
-
-Nombre:clemencia
-Cedula:51647672
-Direccion:carera 83 #69a-82
-Telefono:3184162087
-Contraseña:clemencia
-
-Nombre:lucas
-Cedula:1016947756
-Direccion:caera 83 #69a-82
-Telefono:3184162087
-Contraseña:lucas
-
-Nombre:kevin
-Cedula:31231
-Direccion:soacha
-Telefono:31231312
-Contraseña:kevin
+Nombre:loca
+Cedula:3123123
+Direccion:dasdas
+Telefono:3123122
+Contraseña:loca
 

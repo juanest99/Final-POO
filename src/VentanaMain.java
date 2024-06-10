@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VentanaMain extends JFrame implements Serializable {
-    private static final long serialVersionUID = 1L; // Para serialización
 
     Color fondo = new Color(38, 35, 53);
     Color text = new Color(194, 190, 212);
@@ -24,14 +23,14 @@ public class VentanaMain extends JFrame implements Serializable {
     JLabel cedulaLabel;
     JLabel numeroLabel;
     JLabel direccionLabel;
-
-    public VentanaMain() {
+    private String nombreUsuario;
+    public VentanaMain(String nombreUsurio) {
         setTitle("Guardería de mascotas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
         getContentPane().setBackground(fondo);
-
+        this.nombreUsuario=nombreUsurio;
         // Agregar listener para guardar los datos al cerrar la ventana
         addWindowListener(new WindowAdapter() {
             @Override
@@ -147,24 +146,29 @@ public class VentanaMain extends JFrame implements Serializable {
     public void nuevo() {
         new Ventana3(this, mascotas);
     }
+    public String getNombreUsuario(){
+        return nombreUsuario;
+    }
 
-    private void guardarDatos() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("datos.data"))) {
+    // Modificar la función guardarDatos para guardar el archivo con el nombre del usuario
+    public void guardarDatos() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombreUsuario + ".data"))) {
             oos.writeObject(mascotas);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void cargarDatos() {
-        File file = new File("datos.data");
-        if (file.exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                mascotas = (List<Mascota>) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+    // Modificar la función cargarDatos para cargar el archivo correcto
+    public void cargarDatos() {
+        String archivo = nombreUsuario + ".data";
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+            mascotas = (List<Mascota>) ois.readObject();
+            actualizarListaMascotas(mascotas);
+        } catch (IOException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "No se encontraron datos para el usuario: " + nombreUsuario);
         }
     }
+
 
 }
