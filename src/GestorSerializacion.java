@@ -10,13 +10,4 @@ public class GestorSerializacion {
         }
     }
 
-    public static Mascota cargarMascota(String archivo) {
-        Mascota mascota = null;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-            mascota = (Mascota) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return mascota;
-    }
 }

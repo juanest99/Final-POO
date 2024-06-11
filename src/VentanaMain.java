@@ -124,7 +124,7 @@ public class VentanaMain extends JFrame implements Serializable {
         nombreLabel.setText("\nNombre: " + nombre);
         cedulaLabel.setText("\nCedula: " + cedula);
         direccionLabel.setText("\nDireccion: " + direccion);
-        numeroLabel.setText(" \nNumero: " + telefono);
+        numeroLabel.setText("\nNumero: " + telefono);
     }
 
     public void actualizarListaMascotas(List<Mascota> mascotas) {
