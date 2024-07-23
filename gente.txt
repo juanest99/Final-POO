@@ -10,3 +10,11 @@ Direccion:dasdas
 Telefono:3123122
 Contraseña:loca
 
+Nombre:menchita
+Cedula:12331231
+Direccion:cdasdateea
+Telefono:32131231
+Contraseña:menchita
+
+
+
