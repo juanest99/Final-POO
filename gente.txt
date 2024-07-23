@@ -1,20 +1,4 @@
-Nombre:juan
-Cedula:1016947756
-Direccion:engativa
-Telefono:3184162087
-Contraseña:juan
 
-Nombre:loca
-Cedula:3123123
-Direccion:dasdas
-Telefono:3123122
-Contraseña:loca
-
-Nombre:menchita
-Cedula:12331231
-Direccion:cdasdateea
-Telefono:32131231
-Contraseña:menchita
 
 
 
